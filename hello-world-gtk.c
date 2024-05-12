@@ -17,13 +17,14 @@ activate (GtkApplication *app,
   window = gtk_application_window_new (app);
   gtk_window_set_title (GTK_WINDOW (window), "Hello");
   //gtk_window_set_default_size (GTK_WINDOW (window), 200, 200);
-  gtk_window_set_resizable (GTK_WINDOW (window), false);
+  gtk_window_set_resizable (GTK_WINDOW (window), FALSE);
 
   button = gtk_button_new_with_label ("Hello World");
   g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
-  gtk_window_set_child (GTK_WINDOW (window), button);
+  gtk_container_add (GTK_CONTAINER (window), button);
 
-  gtk_window_present (GTK_WINDOW (window));
+  //gtk_window_present (GTK_WINDOW (window));
+  gtk_widget_show_all (window);
 }
 
 int
