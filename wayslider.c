@@ -13,6 +13,8 @@ activate (GtkApplication *app,
           gpointer        user_data)
 {
     GtkWidget *window;
+    GtkWidget *grid;
+    GtkWidget *slider;
     GtkWidget *button;
 
     window = gtk_application_window_new (app);
@@ -21,9 +23,15 @@ activate (GtkApplication *app,
     gtk_layer_set_anchor (GTK_WINDOW (window), 1, TRUE);
     gtk_layer_set_anchor (GTK_WINDOW (window), 2, TRUE);
 
+    grid = gtk_grid_new();
+    gtk_container_add (GTK_CONTAINER (window), grid);
+
+    slider = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, NULL);
+    gtk_grid_attach (GTK_GRID (grid), slider, 0, 0, 1, 1);
+
     button = gtk_button_new_with_label("Hello world");
     g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
-    gtk_container_add (GTK_CONTAINER (window), button);
+    gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
 
     gtk_widget_show_all (window);
 }
