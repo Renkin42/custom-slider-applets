@@ -25,6 +25,7 @@ activate (GtkApplication *app,
 
   //gtk_window_present (GTK_WINDOW (window));
   gtk_widget_show_all (window);
+  gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_MOUSE);
 }
 
 int
