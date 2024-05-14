@@ -1,11 +1,21 @@
 #include <gtk-layer-shell.h>
 #include <gtk/gtk.h>
+#include <glib/gprintf.h>
 
 static void
 print_hello (GtkWidget *widget,
              gpointer   data)
 {
     g_print ("Hello World\n");
+}
+
+static void
+print_slider_value (GtkWidget      *widget,
+                    GdkEventButton  event,
+                    gpointer        data)
+{
+    gdouble value = gtk_range_get_value (GTK_RANGE (widget));
+    g_printf ("%0.0f\n", value);
 }
 
 static void
@@ -26,7 +36,8 @@ activate (GtkApplication *app,
     grid = gtk_grid_new();
     gtk_container_add (GTK_CONTAINER (window), grid);
 
-    slider = gtk_scale_new (GTK_ORIENTATION_HORIZONTAL, NULL);
+    slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 100.0, 5.0);
+    g_signal_connect (slider, "button-release-event", G_CALLBACK (print_slider_value), NULL);
     gtk_grid_attach (GTK_GRID (grid), slider, 0, 0, 1, 1);
 
     button = gtk_button_new_with_label("Hello world");
