@@ -5,19 +5,18 @@
 
 static void
 print_hello (GtkWidget      *widget,
-             GdkEventButton  event,
              gpointer        data)
 {
     g_print ("Hello World\n");
 }
 
-static void
-print_slider_value (GtkWidget      *widget,
-                    GdkEventButton  event,
-                    gpointer        data)
+static gboolean
+slider_released (GtkWidget *widget,
+                 gpointer   data)
 {
-    gdouble value = gtk_range_get_value (GTK_RANGE (widget));
-    g_printf ("%0.0f\n", value);
+    gdouble value = gtk_range_get_value(GTK_RANGE (widget));
+    g_printf("%.1f\n", value);
+    return FALSE;
 }
 
 static void
@@ -39,11 +38,11 @@ activate (GtkApplication *app,
     gtk_container_add (GTK_CONTAINER (window), grid);
 
     slider = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL, 0.0, 100.0, 5.0);
-    g_signal_connect (slider, "button-release-event", G_CALLBACK (print_slider_value), NULL);
+    g_signal_connect (slider, "button-release-event", G_CALLBACK (slider_released), NULL);
     gtk_grid_attach (GTK_GRID (grid), slider, 0, 0, 1, 1);
 
     button = gtk_button_new_with_label("Hello world");
-    g_signal_connect (button, "button-release-event", G_CALLBACK (print_hello), NULL);
+    g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
     gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
 
     gtk_widget_show_all (window);
