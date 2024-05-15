@@ -1,10 +1,12 @@
 #include <gtk-layer-shell.h>
 #include <gtk/gtk.h>
 #include <glib/gprintf.h>
+#include <yaml.h>
 
 static void
-print_hello (GtkWidget *widget,
-             gpointer   data)
+print_hello (GtkWidget      *widget,
+             GdkEventButton  event,
+             gpointer        data)
 {
     g_print ("Hello World\n");
 }
@@ -41,7 +43,7 @@ activate (GtkApplication *app,
     gtk_grid_attach (GTK_GRID (grid), slider, 0, 0, 1, 1);
 
     button = gtk_button_new_with_label("Hello world");
-    g_signal_connect (button, "clicked", G_CALLBACK (print_hello), NULL);
+    g_signal_connect (button, "button-release-event", G_CALLBACK (print_hello), NULL);
     gtk_grid_attach (GTK_GRID (grid), button, 0, 1, 1, 1);
 
     gtk_widget_show_all (window);
