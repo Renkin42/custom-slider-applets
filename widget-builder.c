@@ -4,14 +4,14 @@
 
 #include "widget-builder.h"
 
-static void
+void
 button_cmd_callback (GtkWidget *widget,
                      gchar     *cmd)
 {
     system(cmd);
 }
 
-static void
+void
 add_new_button (GtkBox             *parent,
                 struct button_data *data)
 {
